@@ -1,0 +1,129 @@
+/* Inicio Hero */
+
+.hero{
+    background-color: var(--primario);
+}
+.hero-title{
+    color: var(--blanco);
+    font-size: 48px;
+    font-weight: 500;
+}
+.hero-title2{
+
+    color: var(--blanco);
+}
+.hero-img{
+    margin-top: 80px;
+    width: 100%;
+}
+
+/* Inicio Ourweb */
+
+.ourweb {
+    margin-top: 10rem;
+}
+.ourweb-title{
+    color: var(--primario);
+    font-size: 46px;
+    margin-top: 50px;
+}
+
+.ourweb-text{
+    color: var(--gris);
+    font-size: 26px;
+    margin-top: 30px;
+}
+
+/* Inicio SearcSection */
+
+.search{
+    margin-top: 10rem;
+}
+
+.search-img{
+    margin-top: 80px;
+    width: 80%;
+}
+
+.icon{
+    margin-bottom: 15px;
+    color: var(--gris);
+}
+
+.search-title{
+    font-size: 38px;
+    padding: 10px;
+}
+
+.search-text{
+    color: var(--gris);
+    font-size: 26px;
+    padding: 10px;
+}
+
+.img-container{
+    height: 100%;
+}
+
+/* Inicio PostSection */
+
+.post{
+    margin-top: 10rem;
+}
+
+.icon{
+    margin-bottom: 1.5rem;
+    color: var(--gris);
+}
+
+.img-container{
+    height: 100%;
+}
+
+.post-img{
+    margin-top: 80px;
+    width: 80%;
+}
+
+.post-title{
+    font-size: 38px;
+    padding: 10px;
+}
+
+.post-text{
+    color: var(--gris);
+    font-size: 26px;
+    padding: 10px;
+}
+
+/* Inicio Connect */
+
+.connect{
+    margin-top: 10rem;
+}
+.icon{
+    margin-bottom: 15px;
+    color: var(--gris);
+}
+
+.img-container{
+    height: 100%;
+}
+
+.connect-img{
+    margin-top: 80px;
+    width: 70%;
+}
+
+.connect-title{
+    font-size: 38px;
+    padding: 10px;
+}
+
+.connect-text{
+    color: var(--gris);
+    font-size: 26px;
+    padding: 10px;
+}
+
+

@@ -1,0 +1,55 @@
+.dogImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.starIcon {
+  font-size: 20px;
+  color: var(--blanco);
+  padding: 1rem;
+  background: #f6bc00;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+
+.footIcon {
+  font-size: 20px;
+  color: var(--blanco);
+  padding: 1rem;
+  background-color: var(--primario);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+
+.rotateIcon {
+  transform: rotate(30deg);
+}
+
+nav .searchNav {
+  margin-top: 3rem;
+}
+
+.dogCard {
+  overflow: hidden;
+  position: relative;
+}
+
+.dogCard img {
+  box-sizing: border-box;
+  transition: all 1s ease;
+}
+
+.dogCard img:hover {
+  transform: scale(102%);
+  transition: all 0.8ms ease;
+  cursor: pointer;
+}
+.dog_title {
+  color: var(--gris);
+}
+.dog_info strong {
+  color: var(--primario);
+}

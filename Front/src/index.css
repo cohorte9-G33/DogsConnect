@@ -1,0 +1,89 @@
+* {
+  user-select: none;
+}
+
+/* Fuente */
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+:root {
+  --primario: #f44551;
+  --gris: #797878;
+  --grisClaro: #dddddd;
+  --blanco: #fff;
+  --negro: #000;
+
+  --separacion: 5rem;
+
+  --fuentePrincipal: 'Ubuntu', sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1REM = 10px */
+  margin: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuentePrincipal);
+  font-size: 1.6rem;
+  line-height: 2;
+}
+
+/* ----- ----- Globales ----- ----- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--fuentePrincipal);
+  margin: calc(var(--separacion) / 2) 0;
+}
+
+h1 {
+  font-size: 4.4rem;
+}
+
+h2 {
+  font-size: 3.6rem;
+}
+
+h3 {
+  font-size: 2.8rem;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* ----- ----- Utilidades ----- ----- */
+
+.text-center {
+  text-align: center;
+}
+
+/* btn */
+
+.customBtn {
+  padding: 8px !important;
+  background-color: var(--primario) !important;
+  border: none !important;
+  color: var(--blanco);
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  border-radius: 5px;
+  margin: 0 auto;
+  text-transform: uppercase;
+}
+.customBtn:hover {
+  background-color: #e2767b !important;
+  color: var(--grisoscuro) !important;
+}

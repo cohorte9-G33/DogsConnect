@@ -1,0 +1,12 @@
+#btnRegister {
+  background-color: transparent;
+  padding: 0 5px;
+  color: var(--primario);
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+#btnRegister:hover {
+  background-color: transparent;
+  color: var(--grisoscuro);
+}
