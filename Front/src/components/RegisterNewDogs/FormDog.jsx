@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 //import './FormDog.css';
 
+const baseURL = process.env.VITE_APP_BASE_URL || 'http://localhost:5000/';
+
 export const FormDog = ({ onHide }) => {
   const [listRaces, setListRaces] = useState([]);
   const [files, setFiles] = useState(null);
@@ -15,7 +17,7 @@ export const FormDog = ({ onHide }) => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/race')
+      .get(`${baseURL}/api/race`)
       .then(({ data: { races } }) => setListRaces(races))
       .catch((error) => {
         console.error(error);
@@ -32,7 +34,7 @@ export const FormDog = ({ onHide }) => {
       }
     });
     try {
-      const res = await axios.post('http://localhost:5000/api/dogs/create', formData);
+      const res = await axios.post(`${baseURL}/api/dogs/create`, formData);
       onHide();
     } catch (error) {
       console.log({ error });

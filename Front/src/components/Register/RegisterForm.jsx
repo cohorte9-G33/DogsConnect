@@ -10,6 +10,8 @@ import { schema } from './schema';
 import modal from '../Modal/modal.module.css';
 import { Form } from 'react-bootstrap';
 
+const baseURL = process.env.VITE_APP_BASE_URL || 'http://localhost:5000/';
+
 const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
     try {
       const {
         data: { success },
-      } = await axios.post('http://localhost:5000/api/auth/register', data);
+      } = await axios.post(`${baseURL}/api/auth/register`, data);
 
       if (success) {
         const { email, password } = data;
