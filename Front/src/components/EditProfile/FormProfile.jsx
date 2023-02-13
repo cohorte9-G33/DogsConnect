@@ -5,6 +5,8 @@ import axios from 'axios';
 import modal from '../Modal/modal.module.css';
 import { useSelector } from 'react-redux';
 
+const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+
 export const FormProfile = ({ onHide }) => {
   const [photo, setPhoto] = useState(null);
   const {
@@ -26,7 +28,7 @@ export const FormProfile = ({ onHide }) => {
 
   const onSubmit = async (newProfile) => {
     console.log(newProfile);
-    const { data } = await axios(`https://dogs-connect-back.vercel.app/api/profile/${id}`, newProfile);
+    const { data } = await axios(`${baseUrl}/api/profile/${id}`, newProfile);
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

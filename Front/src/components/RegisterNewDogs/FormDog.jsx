@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 //import './FormDog.css';
 
+const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+
 export const FormDog = ({ onHide }) => {
   const [listRaces, setListRaces] = useState([]);
   const [files, setFiles] = useState(null);
@@ -32,7 +34,7 @@ export const FormDog = ({ onHide }) => {
       }
     });
     try {
-      const res = await axios.post(`https://dogs-connect-back.vercel.app/api/dogs/create`, formData);
+      const res = await axios.post(`${baseURL}/api/dogs/create`, formData);
       onHide();
     } catch (error) {
       console.log({ error });

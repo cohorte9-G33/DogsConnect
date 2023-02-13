@@ -10,6 +10,8 @@ import { schema } from './schema';
 import modal from '../Modal/modal.module.css';
 import { Form } from 'react-bootstrap';
 
+const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+
 const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,11 +32,11 @@ const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
     try {
       const {
         data: { success },
-      } = await axios.post(`https://dogs-connect-back.vercel.app/api/auth/register`, data);
+      } = await axios.post(`${baseURL}/api/auth/register`, data);
 
       if (success) {
         const { email, password } = data;
-        const dataUser = await axios.post('https://dogs-connect-back.vercel.app/api/auth/login', { email, password });
+        const dataUser = await axios.post(`${baseURL}/api/auth/login`, { email, password });
         if (dataUser.data.success) {
           dispatch(login(dataUser.data.user.token));
           navigate('/card');

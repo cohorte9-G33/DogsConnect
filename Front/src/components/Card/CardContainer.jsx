@@ -3,6 +3,8 @@ import Card from './Card';
 import axios from 'axios';
 import Spinner from '../Spinner/Spinner';
 
+const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+
 const CardContainer = () => {
   const [dogs, setDogs] = useState();
   const [loading, setLoading] = useState(false);
@@ -10,7 +12,7 @@ const CardContainer = () => {
   const handleFetch = async () => {
     const {
       data: { success, dogs },
-    } = await axios.get(`https://dogs-connect-back.vercel.app/api/dogs/`);
+    } = await axios.get(`${baseURL}/api/dogs/`);
     success && setDogs(dogs);
   };
 
