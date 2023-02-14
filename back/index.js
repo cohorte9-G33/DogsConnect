@@ -26,7 +26,10 @@ const PORT = process.env.PORT || 4000;
 //Middleware
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+   origin:'*',   
+   optionSuccessStatus:200,
+}));
 
 //use routes
 server.use('/api/users', usersRoutes);
