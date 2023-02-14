@@ -27,8 +27,7 @@ const PORT = process.env.PORT || 4000;
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 server.use(cors({
-   origin:'*',   
-   optionSuccessStatus:200,
+   origin:'https://dogs-connect.vercel.app/'  
 }));
 
 //use routes
