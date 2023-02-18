@@ -9,8 +9,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
 import modal from '../Modal/modal.module.css';
 import { Form } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 
-const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
 const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
   const navigate = useNavigate();
@@ -28,45 +29,41 @@ const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (values) => {
     try {
       const {
         data: { success },
-      } = await axios.post(`${baseURL}/api/auth/register`, data);
+      } = await toast.promise(axios.post(`${baseURL}/api/auth/register`, values), {
+        loading: 'Registrando...',
+        success: <b>Usuario registrado correctamente</b>,
+        error: <b>Ya existe un usuario con ese email</b>,
+      });
 
       if (success) {
-        const { email, password } = data;
-        const dataUser = await axios.post(`${baseURL}/api/auth/login`, { email, password });
-        if (dataUser.data.success) {
-          dispatch(login(dataUser.data.user.token));
+        const { email, password } = values;
+        const { data } = await axios.post(`${baseURL}/api/auth/login`, { email, password });
+        console.log({ data });
+        if (data.success) {
+          dispatch(login({ token: data.token, profile: data.user }));
           navigate('/card');
+          reset();
+          handleCloseRegister();
         } else {
-          console.log(dataUser.error);
+          toast.error('Credenciales de acceso invalidos', { duration: 2000 });
         }
-
-        handleCloseRegister();
       }
     } catch (error) {
-      console.log(error.response.status);
-    } finally {
-      reset();
+      console.log(error);
     }
   };
 
   return (
     <>
-      <Modal
-        title='Registro'
-        show={showRegister}
-        onHide={() => {
-          reset();
-          handleCloseRegister();
-        }}
-      >
+      <Modal title='Registro' show={showRegister} onHide={handleCloseRegister}>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className='mb-3' controlId='email'>
             <Form.Label className='mb-0'>Email</Form.Label>
-            <Form.Control name='email' size='lg' placeholder='Ingrese su email' {...register('email')} />
+            <Form.Control autoFocus name='email' size='lg' placeholder='Ingrese su email' {...register('email')} />
             {errors?.email && <span className={modal.error}>{errors.email.message}</span>}
           </Form.Group>
           <Form.Group className='mb-3' controlId='location'>
@@ -86,7 +83,7 @@ const RegisterForm = ({ showRegister, handleCloseRegister, showLogin }) => {
             {errors?.password && <span className={modal.error}>{errors.password.message}</span>}
           </Form.Group>
           <Button type='submit' className='customBtn w-100 mb-4'>
-            Ingresar
+            Registrarse
           </Button>
           <div className='d-flex justify-content-center'>
             <span>

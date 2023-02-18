@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import sharp from 'sharp';
 import { Profiles } from '../models/profile.js';
 import { Users } from './../models/users.js';
 
@@ -12,7 +13,10 @@ export const AuthService = {
         password: encryptedPassword,
       });
 
-      await Profiles.create({ userId: user.id });
+      const imageToBuffer = async () => await sharp('public/user.png').resize(200).webp().toBuffer();
+
+      const photo = await imageToBuffer();
+      const profile = await Profiles.create({ userId: user.id, photo });
 
       const { id, location, email } = user;
 

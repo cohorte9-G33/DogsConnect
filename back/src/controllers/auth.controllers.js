@@ -5,7 +5,7 @@ export const AuthControllers = {
   register: async (req, res) => {
     const response = await AuthService.register(req.body);
 
-    res.status(response.success ? 201 : 400).send(response);
+    res.status(response.success ? 201 : 401).send(response);
   },
   login: async (req, res) => {
     const { email } = req.user;

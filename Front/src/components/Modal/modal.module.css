@@ -3,7 +3,7 @@
   color: var(--primario);
 }
 
-textarea {
+.noResize {
   resize: none;
 }
 
@@ -20,16 +20,17 @@ label {
 }
 
 .photo {
-  height: 200px;
-  width: 200px;
-  /* padding: 5px; */
+  height: 300px;
+  width: 300px;
   margin-right: 5px;
   border-radius: 50%;
   border: 1px solid black;
   object-fit: cover;
+  cursor: pointer;
 }
 
-input {
+input,
+select {
   height: 4rem;
-  font-size: 1.5rem !important;
+  font-size: 1.3rem !important;
 }

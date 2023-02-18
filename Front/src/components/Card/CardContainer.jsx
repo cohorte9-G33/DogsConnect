@@ -1,32 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Card from './Card';
-import axios from 'axios';
-import Spinner from '../Spinner/Spinner';
-
-const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+import NavBarSearch from '../NavBarSearch/NavBarSearch';
+import { useSelector } from 'react-redux';
 
 const CardContainer = () => {
-  const [dogs, setDogs] = useState();
-  const [loading, setLoading] = useState(false);
+  const { dogs } = useSelector((state) => state);
+  const [filteredList, setFilteredList] = useState(null);
+  const [filterFields, setFilterFields] = useState(null);
 
-  const handleFetch = async () => {
-    const {
-      data: { success, dogs },
-    } = await axios.get(`${baseURL}/api/dogs/`);
-    success && setDogs(dogs);
-  };
+  const handleFilters = (fields) => setFilterFields(fields);
 
   useEffect(() => {
-    setLoading(true);
-    handleFetch();
-    setLoading(false);
-  }, []);
-
-  if (loading) return <Spinner />;
+    let listAux = dogs && [...dogs];
+    listAux &&
+      filterFields &&
+      Object.keys(filterFields).forEach((key) => {
+        if (key !== 'location') {
+          listAux = listAux.filter((dog) => {
+            return dog[key] === filterFields[key];
+          });
+        } else {
+          listAux = listAux.filter((dog) => {
+            return dog[key].toLowerCase().includes(filterFields[key].toLowerCase());
+          });
+        }
+      });
+    listAux && setFilteredList(listAux);
+  }, [filterFields]);
 
   return (
     <div>
-      <Card dogs={dogs} />
+      <nav>
+        <div className='searchNav'>
+          <NavBarSearch handleFilters={handleFilters} />
+        </div>
+      </nav>
+      <Card dogs={filteredList} />
     </div>
   );
 };

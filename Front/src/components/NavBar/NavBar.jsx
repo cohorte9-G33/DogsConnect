@@ -12,7 +12,7 @@ const NavBar = () => {
   const [showModalNewDog, setShowModalNewDog] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const {
-    user: { islogged },
+    user: { islogged, profile },
   } = useSelector((state) => state);
 
   const handleClose = () => setShow(false);
@@ -25,16 +25,22 @@ const NavBar = () => {
   return (
     <>
       <header>
-        <nav>
-          <div className='container d-flex justify-content-between navbar'>
-            <a className='navbar-brand'>
-              <img src='./img/logo.png' alt='imagen logo' />
-            </a>
+        <nav className='container'>
+          <div className='navbar'>
+            <div>
+              <a className='navbar-brand'>
+                <img src='./img/logo.png' alt='imagen logo' />
+              </a>
+            </div>
             <div>
               {!islogged ? (
                 <LoginButton handleShow={handleShow} />
               ) : (
-                <LogoutButton handleShowNewDog={handleShowNewDog} handleShowEditProfile={handleShowEditProfile} />
+                <LogoutButton
+                  handleShowNewDog={handleShowNewDog}
+                  handleShowEditProfile={handleShowEditProfile}
+                  profile={profile}
+                />
               )}
             </div>
           </div>

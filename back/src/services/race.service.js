@@ -12,7 +12,9 @@ export const RaceService = {
   },
   getAll: async () => {
     try {
-      const races = await Races.findAll();
+      const races = await Races.findAll({
+        order: [['name', 'ASC']],
+      });
       if (!races) throw new Error('Not found');
       return { success: true, races };
     } catch (error) {

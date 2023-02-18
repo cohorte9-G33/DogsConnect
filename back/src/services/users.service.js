@@ -8,7 +8,7 @@ export const UsersService = {
         where: {
           email,
         },
-        include: [{ model: Profiles }],
+        include: { model: Profiles },
       });
       if (!user) throw new Error('Usuario no encontrado');
       return { success: true, user };
@@ -22,9 +22,7 @@ export const UsersService = {
   getById: async (id) => {
     try {
       const user = await Users.findByPk(id, {
-        include: {
-          model: Profiles,
-        },
+        include: [{ model: Profiles }, { model: Likes }],
         attributes: {
           exclude: ['password'],
         },

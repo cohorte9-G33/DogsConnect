@@ -1,71 +1,109 @@
-import React from 'react'
-import ButtonSearch from '../Search/ButtonSearch'
-import './navBarSearch.css'
+import { useForm } from 'react-hook-form';
+import ButtonSearch from '../Search/ButtonSearch';
+import { useSelector } from 'react-redux';
 
-const NavBarSearch = () => {
+import './navBarSearch.css';
+
+const NavBarSearch = ({ handleFilters }) => {
+  const { races: listRaces } = useSelector((state) => state);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const fields = Object.keys(data).reduce((acc, key) => {
+      if (data[key]) acc = { ...acc, [key]: data[key] };
+      return acc;
+    }, {});
+    handleFilters(fields);
+  };
+
+  const clearFilters = (data) => {
+    reset();
+    handleFilters({});
+  };
 
   return (
     <>
-        <div>
-            <form className="formulario contenedor">
-                <div className="formulario__campo">
-                    <label htmlFor="ubicacion" className="formulario__label">Ciudad:</label>
-                    <input type="text" className='formulario__input' id="ubicacion" placeholder="Ciudad" />
-                </div>
-
-                <div className="formulario__campo">
-                    <label htmlFor="raza" className="formulario__label">Raza:</label>
-                    <input type="text" className="formulario__input" id="raza" placeholder="Raza" />
-                </div>
-
-                <div className="formulario__campo">
-                    <label htmlFor="sexo" className="formulario__label">Sexo:</label>
-                    <select name="select" id='sexo' className="formulario__input">
-                        <option value="value0" disabled>Sexo</option>
-                        <option value="value1">Macho</option>
-                        <option value="value2">Hembra</option>
-                    </select>
-                </div>
-
-                <div className="formulario__campo">
-                    <label htmlFor="Tamaño" className="formulario__label">Tamaño:</label>
-                    <select name="select" id='tamaño' className="formulario__input">
-                        <option value="value0" disabled>Tamaño</option>
-                        <option value="value1">Pequeño</option>
-                        <option value="value2">Mediano</option>
-                        <option value="value3">Grande</option>
-                    </select>
-                </div>
-
-                <div className="formulario__campo">
-                    <label htmlFor="Color" className="formulario__label">Color:</label>
-                    <input type="text" className="formulario__input" id="color" placeholder="Color" />
-                </div>
-
-                <div className="formulario__campo">
-                    <label htmlFor="pelo" className="formulario__label">Pelo:</label>
-                    <select name="select" id='pelo' className="formulario__input">
-                        <option value="value0" disabled>Pelo</option>
-                        <option value="value1">Corto</option>
-                        <option value="value2">Medio largo</option>
-                        <option value="value3">Largo</option>
-                    </select>
-                </div>
-
-                <div className="formulario__campo ">
-                    <button className="formulario__submit">
-                    Buscar
-                    </button>
-                </div>
-            </form>
+      <form className='formulario contenedor' onSubmit={handleSubmit(onSubmit)}>
+        <div className='formulario__campo'>
+          <select name='condition' className='formulario__input' {...register('condition')} defaultValue=''>
+            <option value=''>Condición</option>
+            <option value='Adopción'>Adopción</option>
+            <option value='Pareja'>Pareja</option>
+          </select>
         </div>
-        <div className='nav_toggle'>
-            <span>
-                <ButtonSearch />
-            </span>
+
+        <div className='formulario__campo'>
+          <input
+            type='text'
+            className='formulario__input'
+            name='location'
+            placeholder='Ciudad'
+            {...register('location')}
+          />
         </div>
+
+        <div className='formulario__campo'>
+          <select name='race' className='formulario__input' {...register('race')} defaultValue=''>
+            <option value=''>Raza</option>
+            <option value='Indefinida'>Indefinida</option>
+            {listRaces.length &&
+              listRaces.map((race) => (
+                <option key={race.id} value={race.name}>
+                  {race.name}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <div className='formulario__campo'>
+          <select name='sex' className='formulario__input' {...register('sex')} defaultValue=''>
+            <option value=''>Sexo</option>
+            <option value='Macho'>Macho</option>
+            <option value='Hembra'>Hembra</option>
+          </select>
+        </div>
+
+        <div className='formulario__campo'>
+          <select name='size' className='formulario__input' {...register('size')} defaultValue=''>
+            <option value=''>Tamaño</option>
+            <option value='Pequeño'>Pequeño</option>
+            <option value='Mediano'>Mediano</option>
+            <option value='Grande'>Grande</option>
+          </select>
+        </div>
+
+        <div className='formulario__campo'>
+          <select name='hairStyle' className='formulario__input' {...register('hairStyle')} defaultValue=''>
+            <option value=''>Pelo</option>
+            <option value='Corto'>Corto</option>
+            <option value='Largo'>Largo</option>
+          </select>
+        </div>
+
+        <div className='formulario__campo boton'>
+          <button type='button' className='formulario__submit clear' onClick={clearFilters}>
+            Limpiar
+          </button>
+        </div>
+        <div className='formulario__campo boton'>
+          <button type='submit' className='formulario__submit'>
+            Buscar
+          </button>
+        </div>
+      </form>
+      <div className='nav_toggle'>
+        <span>
+          <ButtonSearch handleFilters={handleFilters} />
+        </span>
+      </div>
     </>
-)
-}
+  );
+};
 
-export default NavBarSearch
+export default NavBarSearch;

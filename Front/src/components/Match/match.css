@@ -1,0 +1,36 @@
+.footIcon {
+  font-size: 20px;
+  color: var(--blanco);
+  padding: 1rem;
+  background-color: var(--primario);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.footIcon:hover {
+  background-color: var(--blanco);
+  color: var(--primario);
+  box-shadow: 0px 0px 8px 0px rgba(121, 120, 120, 1);
+  transform: rotate(30deg);
+}
+
+.contactInfo {
+  color: var(--gris);
+}
+
+.datosContacto {
+  list-style: none;
+}
+.datosContacto strong {
+  color: var(--primario);
+}
+
+.form__campo p {
+  color: var(--gris);
+}
+
+.form__campo textarea {
+  border-radius: 10px;
+}

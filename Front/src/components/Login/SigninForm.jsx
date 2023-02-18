@@ -5,15 +5,16 @@ import RegisterForm from '../Register/RegisterForm';
 import axios from 'axios';
 import './signinForm.css';
 import { useDispatch } from 'react-redux';
-import { login } from '../../redux/slices/userSlice';
+import { loadLikes, login } from '../../redux/slices/userSlice';
 import { useForm } from 'react-hook-form';
 import { Modal } from '../Modal/Modal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
 import modal from '../Modal/modal.module.css';
 import { Form } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 
-const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
 const SigninForm = ({ show, handleClose, showLogin }) => {
   const navigate = useNavigate();
@@ -36,17 +37,26 @@ const SigninForm = ({ show, handleClose, showLogin }) => {
   const handleShowRegister = () => setShowRegister(true);
 
   const onSubmit = (data) => {
-    axios.post(`${baseURL}/api/auth/login`, data).then(({ data }) => {
-      if (data.success) {
-        console.log(data);
-        dispatch(login({ token: data.token, profile: data.user }));
+    axios.post(`${baseURL}/api/auth/login`, data).then(({ data: { success, user, token } }) => {
+      if (success) {
+        handleClose();
+        reset();
+        dispatch(login({ token, profile: user }));
+        axios
+          .get(`${baseURL}/api/likes/${user.id}`)
+          .then(({ data: { likes } }) => {
+            const listLikes = likes.map(({ dogId }) => dogId);
+            dispatch(loadLikes(listLikes));
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+
         navigate('/card');
       } else {
-        console.log(data.error);
+        toast.error(data.error, { duration: 1500 });
       }
     });
-    handleClose();
-    reset();
   };
 
   return (
@@ -62,7 +72,7 @@ const SigninForm = ({ show, handleClose, showLogin }) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className='mb-3' controlId='email'>
             <Form.Label className='mb-0'>Email</Form.Label>
-            <Form.Control name='email' size='lg' placeholder='Ingrese su email' {...register('email')} />
+            <Form.Control autoFocus name='email' size='lg' placeholder='Ingrese su email' {...register('email')} />
             {errors?.email && <span className={modal.error}>{errors.email.message}</span>}
           </Form.Group>
           <Form.Group className='mb-3' controlId='password'>

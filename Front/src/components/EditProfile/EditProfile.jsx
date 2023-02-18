@@ -4,7 +4,7 @@ import { FormProfile } from './FormProfile.jsx';
 export const EditProfile = ({ show, onHide }) => {
   return (
     <Modal title='Editar Perfil' show={show} onHide={onHide}>
-      <FormProfile />
+      <FormProfile onHide={onHide} />
     </Modal>
   );
 };

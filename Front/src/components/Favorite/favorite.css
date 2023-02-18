@@ -1,0 +1,26 @@
+.NoFavorite {
+  font-size: 20px;
+  color: var(--blanco);
+  padding: 1rem;
+  background: #f6bc00;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.isFavorite {
+  font-size: 20px;
+  color: #f6bc00;
+  padding: 1rem;
+  background: var(--blanco);
+  border: solid 1px #f6bc00;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.isFavorite:hover {
+  color: var(--blanco);
+  background: #f6bc00;
+}

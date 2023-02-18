@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Form, Image, Stack } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import modal from '../Modal/modal.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateProfile } from '../../redux/slices/userSlice';
+import EditPhotoIcon from './EditPhotoIcon';
 
-const baseURL = import.meta.env.VITE_APP_BASE_URL || 'http://localhost:5000';
+const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
 export const FormProfile = ({ onHide }) => {
+  const dispatch = useDispatch();
   const [photo, setPhoto] = useState(null);
+  const [auxPhoto, setAuxPhoto] = useState(null);
+  const [photoURL, setPhotoURL] = useState(null);
   const {
     user: {
       profile: { id, firstName, lastName, phone, photo: userPhoto },
@@ -25,27 +30,49 @@ export const FormProfile = ({ onHide }) => {
       phone,
     },
   });
+  const formData = new FormData();
+
+  useEffect(() => {
+    const img = userPhoto.data ? btoa(String.fromCharCode(...new Uint8Array(userPhoto.data))) : null;
+    setPhoto(img);
+  }, []);
 
   const onSubmit = async (newProfile) => {
-    console.log(newProfile);
-    const { data } = await axios(`${baseUrl}/api/profile/${id}`, newProfile);
+    formData.append('photo', auxPhoto);
+    //formData.append(key, newProfile[key][0])
+    !newProfile.photo.length && delete newProfile.photo;
+    Object.keys(newProfile).forEach((key) => (key === 'photo' ? null : formData.append(key, newProfile[key])));
+    const {
+      data: { user },
+    } = await axios.put(`${baseURL}/api/profile/${id}`, formData);
+    dispatch(updateProfile(user));
+    onHide();
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <Stack direction='horizontal' gap={2}>
-        <Image src={photo ? photo : './../../../public/img/user.png'} alt='user' className={modal.photo} />
-        <Form.Group controlId='formFileMultiple' className='mb-4'>
-          <Form.Label className='mb-0'>Cambiar foto</Form.Label>
-          <Form.Control
-            type='file'
-            name='photo'
-            accept='image/*'
-            size='lg'
-            {...register('photo')}
-            onChange={(e) => setPhoto(URL.createObjectURL(e.target.files[0]))}
-          />
-        </Form.Group>
-      </Stack>
+      <Form.Group controlId='photo' className='mb-4'>
+        <Form.Label className='d-flex justify-content-center'>
+          {photo ? (
+            <Image src={`data:image/webp;base64,${photo}`} alt='user' className={modal.photo} />
+          ) : (
+            <Image src={photoURL} alt='user' className={modal.photo} />
+          )}
+          <EditPhotoIcon />
+        </Form.Label>
+        <Form.Control
+          type='file'
+          hidden
+          name='photo'
+          accept='image/*'
+          size='lg'
+          {...register('photo')}
+          onChange={(e) => {
+            setPhoto(null);
+            setPhotoURL(URL.createObjectURL(e.target.files[0]));
+            setAuxPhoto(e.target.files[0]);
+          }}
+        />
+      </Form.Group>
 
       <Form.Group className='mb-3' controlId='firstName'>
         <Form.Label className='mb-0'>Nombre</Form.Label>
