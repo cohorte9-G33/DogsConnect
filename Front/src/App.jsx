@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/race`)
+      .get(`${baseURL}api/race`)
       .then(({ data: { races } }) => dispatch(loadRaces(races)))
       .catch((error) => {
         console.error(error);
