@@ -34,7 +34,7 @@ const Cards = ({ dogs }) => {
         {dogs?.map((dog) => {
           const { name, age, typeAge, id, images, location, condition } = dog;
           return (
-            <div className='col-sm-12 col-md-6 col-lg-4 col-xl-3' key={id}>
+            <div className='col-12 col-sm-12 col-md-6 col-lg-4' key={id}>
               <Card className='row me-4 mt-5 mx-auto dogCard'>
                 <Card.Img
                   variant='top'
