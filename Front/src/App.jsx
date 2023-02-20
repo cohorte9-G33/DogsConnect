@@ -14,7 +14,7 @@ import axios from 'axios';
 import { Toaster } from 'react-hot-toast';
 import LikePage from './components/Likes/LikePage';
 
-const baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
+const baseURL =  'https://server-dogs-connect.vercel.app';
 
 const App = () => {
   const dispatch = useDispatch();
