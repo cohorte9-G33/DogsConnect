@@ -34,7 +34,7 @@ server.use(express.static(path.join(__dirname, 'public')));
 //Middleware
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
-server.use(cors({ origin: '*' }));
+server.use(cors());
 
 //use routes
 server.use('/api/users', usersRoutes);
