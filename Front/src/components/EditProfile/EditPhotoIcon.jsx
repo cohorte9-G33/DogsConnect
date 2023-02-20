@@ -2,8 +2,7 @@ import { Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
-import './EditPhotoIcon.css';
-
+import './editPhotoIcon.css';
 const EditPhotoIcon = () => {
   return (
     <div>
