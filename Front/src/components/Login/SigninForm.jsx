@@ -37,13 +37,13 @@ const SigninForm = ({ show, handleClose, showLogin }) => {
   const handleShowRegister = () => setShowRegister(true);
 
   const onSubmit = (data) => {
-    axios.post(`${baseURL}/api/auth/login`, data).then(({ data: { success, user, token } }) => {
+    axios.post(`${baseURL}api/auth/login`, data).then(({ data: { success, user, token } }) => {
       if (success) {
         handleClose();
         reset();
         dispatch(login({ token, profile: user }));
         axios
-          .get(`${baseURL}/api/likes/${user.id}`)
+          .get(`${baseURL}api/likes/${user.id}`)
           .then(({ data: { likes } }) => {
             const listLikes = likes.map(({ dogId }) => dogId);
             dispatch(loadLikes(listLikes));
