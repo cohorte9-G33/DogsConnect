@@ -21,14 +21,14 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/api/race`)
+      .get(`${baseURL}api/race`)
       .then(({ data: { races } }) => dispatch(loadRaces(races)))
       .catch((error) => {
         console.error(error);
       });
 
     axios
-      .get(`${baseURL}/api/dogs/`)
+      .get(`${baseURL}api/dogs/`)
       .then(({ data: { success, dogs } }) => {
         if (success) {
           const auxDogs = dogs?.map((dog) => {
