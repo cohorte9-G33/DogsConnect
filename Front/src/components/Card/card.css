@@ -43,7 +43,7 @@ strong {
 }
 .dog_description {
   border: solid 1px var(--grisClaro);
-  height: 80px;
+  height: auto;
 }
 .location-modal {
   font-size: 1.8rem;
